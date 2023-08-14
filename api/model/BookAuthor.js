@@ -1,1 +1,4 @@
-// table
+class BookAuthors{
+
+}
+module.exports = BookAuthors
