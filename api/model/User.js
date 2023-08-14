@@ -1,4 +1,6 @@
 const db = require('../config')
+const {hash, compare , hashSync} = require('bcrypt')
+const {createToken} = require('../middleware/AuthenticateUser')
 class Users{
     fecthUsers(req, res) {
         const query = `
@@ -36,8 +38,32 @@ class Users{
         `
     }
     // nothing in login will continue on 
-    register(req,res){
-
+    async register(req,res){
+        const data = req.body
+        // Encrypt password
+        data.userPass =  await hash(data.userPass, 15)
+        // payload
+        const user = {
+            emailAdd: data.emailAdd,
+            userPass: data.userPass
+        }
+        // Query
+        const query = `
+        INSERT INTO Users
+        SET ?
+        `
+        db.query(query,[data],(err)=>{
+            if(err) throw err
+            res.cookies("LegitUser", token,
+            {
+                maxAge : 3600000,
+                httpOnly : true
+            })
+            res.json({
+                status: res.ststusCode,
+                msg: " You are  now registered."
+            })
+        })
     }
     updateUser(req ,res) {
         const query = `
