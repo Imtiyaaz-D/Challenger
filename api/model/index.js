@@ -1,7 +1,7 @@
 const Users = require('./User')
 const Orders = require('./Orders')
 const Books = require('./Books')
-const BookAuthors = require('./BookAuthors')
+const BookAuthor = require('./BookAuthor')
 module.exports = {
     users: new Users(),
 }

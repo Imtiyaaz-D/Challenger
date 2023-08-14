@@ -16,7 +16,7 @@ routes.post('/register', bodyparser.json(),(req, res)=>{
     users.updateUser(req, res)
 })
 
-routes.put('./user/:id', bodyParser.json(),(req, res)=>{
+routes.put('./user/:id', bodyparser.json(),(req, res)=>{
     users.updateUser(req,res)
 }
 )
