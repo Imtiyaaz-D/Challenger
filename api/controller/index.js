@@ -4,7 +4,7 @@ const routes = express.Router()
 const {users} = require('../model')
 
 // =============User`s routes=================
-routes.get('/users',(req,res)=>{
+routes.get('/user',(req,res)=>{
     users.fecthUsers(req,res)
 })
 

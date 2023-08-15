@@ -2,7 +2,7 @@ const db = require('../config')
 const {hash, compare , hashSync} = require('bcrypt')
 const {createToken} = require('../middleware/AuthenticateUser')
 class Users{
-    fecthUsers(req, res) {
+    fetchUsers(req, res) {
         const query = `
         SELECT userID, firstName ,lastName ,gender ,userDOB,
         emailAdd, profileUrl
@@ -12,7 +12,7 @@ class Users{
             (err,results)=>{
               if(err) throw err
               res.json({
-                status: res.ststusCode,
+                status: res.statusCode,
                 results
               })
         })
@@ -39,7 +39,7 @@ class Users{
         // query
         const query = `
         SELECT firstName , lastName , gender ,userDOB,
-        emailAdd ,underPass, profileUrl
+        emailAdd ,userPass, profileUrl
         FROM Users
         WHERE emailAdd = ${emailAdd}
         `
@@ -83,7 +83,7 @@ class Users{
         })
     }
     // nothing in login will continue on 
-    async register(req,res){
+    async register(req, res){
         const data = req.body
         // Encrypt password
         data.userPass =  await hash(data.userPass, 15)
@@ -105,7 +105,7 @@ class Users{
                 httpOnly : true
             })
             res.json({
-                status: res.ststusCode,
+                status: res.statusCode,
                 msg: " You are  now registered."
             })
         })
