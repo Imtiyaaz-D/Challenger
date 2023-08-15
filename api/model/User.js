@@ -34,8 +34,53 @@ class Users{
             })
     }
     login(req,res){
-        const query =`
+        const {emailAdd, userPass} = 
+        req.body
+        // query
+        const query = `
+        SELECT firstName , lastName , gender ,userDOB,
+        emailAdd ,underPass, profileUrl
+        FROM Users
+        WHERE emailAdd = ${emailAdd}
         `
+        db.query(query, async(err,results)=>{
+            if(err) throw err
+            if(!results?.length){
+                res.json({
+                    status: res.statusCode,
+                    msg: "You provided a wrong email."
+                })
+
+            }else{
+                await compare(userPass,results[0].userPass,(cErr,cResults)=>{
+                    if(cErr) throw cErr
+                    // Create a token
+                    const token = createToken({
+                        emailAdd,userPass
+                    })
+                    // Save a token 
+                    res.cookies("LegitUser",
+                    token,{
+                        maxAge: 3600000,
+                        httpOnly: true
+                    }
+                    )
+                    if(cResults){
+                        res.json({
+                            msg: "Logged in",
+                            token,
+                            results: results[0]
+                        })
+                    }else{
+                        res.json({
+                            status:statusCode,
+                            msg: "Invaild password or you have not registered"
+                        })
+                    }
+                })
+
+            }
+        })
     }
     // nothing in login will continue on 
     async register(req,res){
