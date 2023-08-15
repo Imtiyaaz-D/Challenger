@@ -16,12 +16,15 @@ routes.post('/register', bodyparser.json(),(req, res)=>{
     users.updateUser(req, res)
 })
 
-routes.put('./user/:id', bodyparser.json(),(req, res)=>{
+routes.put('/user/:id', bodyparser.json(),(req, res)=>{
     users.updateUser(req,res)
 }
 )
 routes.delete('/user/:id',(req,res)=>{
     users.deleteUser(req,res)
+})
+routes.post('/login',bodyparser.json(), (req, res)=>{
+    users.login(req, res)
 })
 module.exports = {
     express,

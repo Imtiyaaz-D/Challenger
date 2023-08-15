@@ -12,7 +12,7 @@ app.use(
 )
 routes.get('^/$|/challenger', (req, res)=>{
     res.sendFile(path.resolve(__dirname,
-        "../static/html/index.html"))
+        "../api/static/html/index.html"))
 })
 app.listen(port, ()=>{
     console.log(`The server is running on port ${port}`);
