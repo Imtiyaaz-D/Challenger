@@ -15,6 +15,3 @@ function createToken(user){
 module.exports = {
     createToken
 }
-// function verfiyAToken(req, res, next){
-//     const token = req.headers["authorization"].
-// }
