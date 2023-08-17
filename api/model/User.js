@@ -41,7 +41,7 @@ class Users{
         SELECT firstName , lastName , gender ,userDOB,
         emailAdd ,userPass, profileUrl
         FROM Users
-        WHERE emailAdd = ${emailAdd}
+        WHERE emailAdd = '${emailAdd}';
         `
         db.query(query, async(err,results)=>{
             if(err) throw err
@@ -82,7 +82,7 @@ class Users{
             }
         })
     }
-    // nothing in login will continue on 
+
     async register(req, res){
         const data = req.body
         // Encrypt password
@@ -109,6 +109,17 @@ class Users{
                 msg: " You are  now registered."
             })
         })
+    }
+    updateUser(req,res){
+        const data = req.body
+        if(data.userPass){
+            data.userPass =
+            hashSync(data.userPass,15)
+        }
+        const query = `
+        UPDATE Users SET ?
+        WHERE userID = ?
+        `
     }
     updateUser(req ,res) {
         const query = `
@@ -140,4 +151,3 @@ class Users{
     }
 }
 module.exports = Users
-// for exporting single object
