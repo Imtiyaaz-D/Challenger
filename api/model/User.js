@@ -131,7 +131,7 @@ class Users{
             (err)=>{
                 if(err) throw err
                 res.json({
-                    status:statusCode,
+                    status: res.statusCode,
                     msg:"The user record was updated."
                 })
             }
